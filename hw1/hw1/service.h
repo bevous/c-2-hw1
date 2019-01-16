@@ -26,7 +26,5 @@ public:
 	int getPrice(); // returns the type of service
 	std::string getDate(); // returns the date of service
 
-
-
 };
 

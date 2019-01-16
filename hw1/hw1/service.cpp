@@ -26,25 +26,21 @@ std::string service::Sformat()
 
 std::string service::getName()
 {
-	return std::string();
+	return name;
 }
 
 std::string service::getType()
 {
-	return std::string();
+	return type;
 }
 
 int service::getPrice()
 {
-	return 0;
+	return price;
 }
 
 std::string service::getDate()
 {
-	return std::string();
+	return date;
 }
 
-
-service::~service()
-{
-}
