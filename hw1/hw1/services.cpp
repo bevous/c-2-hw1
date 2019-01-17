@@ -31,23 +31,24 @@ void services::readFile()
 				name = buffer2;
 			}
 			case(1): {
-				type=buffer2
+				type = buffer2;
 			}
 			case(2): {
-
+				price = std::stod(buffer2);
 			}
 			case(3): {
-
+				date = buffer2;
 			}
 			default: {
-
+				collum = 0; //use 0 to reset the collum
 			}
 			}
 		}
+		sales.push_back(service(name, type, price, date));
 	}
 
 	inFile.close();
-
+	
 }
 
 

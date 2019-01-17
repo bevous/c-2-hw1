@@ -1,15 +1,27 @@
 #include "pch.h"
 #include "service.h"
+#include <iostream>
 
 
-std::string service::formatter()
-{
-	return std::string();
-}
 
 service::service()
 {
 }
+
+
+int service::compare_to(const service &other)
+{
+	if (this->getPrice() < other.getPrice()) {
+		return -1;
+	}
+	else if (this->getPrice() > other.getPrice()) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
 
 service::service(std::string nam, std::string typ, int pric, std::string dat)
 {
@@ -19,28 +31,62 @@ service::service(std::string nam, std::string typ, int pric, std::string dat)
 	date = dat;
 }
 
-std::string service::Sformat()
-{
-	return std::string();
-}
 
-std::string service::getName()
+
+std::string service::getName() const
 {
 	return name;
 }
 
-std::string service::getType()
+std::string service::getType() const
 {
 	return type;
 }
 
-int service::getPrice()
+double service::getPrice() const
 {
 	return price;
 }
 
-std::string service::getDate()
+std::string service::getDate() const
 {
 	return date;
 }
 
+
+bool service::operator<(const service &rh)
+{
+	return this->compare_to(rh) < 0;
+}
+
+bool service::operator>(const service &rh)
+{
+	return this->compare_to(rh) > 0;
+}
+
+bool service::operator<=(const service &rh)
+{
+	return this->compare_to(rh) <= 0;
+}
+
+bool service::operator>=(const service &rh)
+{
+	return this->compare_to(rh) >= 0;
+}
+
+bool service::operator==(const service &rh)
+{
+	return this->compare_to(rh) == 0;
+}
+
+bool service::operator!=(const service &rh)
+{
+	return this->compare_to(rh) != 0;
+}
+
+std::ostream& operator<<(std::ostream& out, service &service)
+{
+	out << service.getName() << " " << service.getType() << " " << service.getPrice() 
+		<< " " << service.getDate();
+	return out;
+}

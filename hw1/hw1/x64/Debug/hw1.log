@@ -1,0 +1,5 @@
+﻿  hw1.cpp
+c:\users\lewis\documents\github\c-2-hw1\hw1\hw1\hw1.cpp(14): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+  services.cpp
+c:\users\lewis\documents\github\c-2-hw1\hw1\hw1\services.cpp(58): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+  Generating Code...
