@@ -3,11 +3,6 @@
 
 
 
-service::service()
-{
-}
-
-
 int service::compare_to(const service &other)
 {
 	if (this->getPrice() < other.getPrice()) {

@@ -15,8 +15,8 @@ private:
 	int compare_to(const service&);
 
 public:
-	service();
-	service(std::string nam = "none", std::string typ = "none", double pric = -1.0, std::string dat = "none");
+	
+	service(std::string nam = "none", std::string typ = "none", double pric = 1.0, std::string dat = "none");
 
 	//getters
 	std::string getName() const;   // returns the client name

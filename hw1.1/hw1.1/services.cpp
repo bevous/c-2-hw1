@@ -16,7 +16,6 @@ services::services()
 *
 * @param file_name The name of file to read.
 */
-
 void services::read_file(std::string file_name)
 {
 	std::string buffer;
@@ -67,31 +66,61 @@ void services::read_file(std::string file_name)
 	std::sort(sales.begin(), sales.end());
 }
 
-service services::min()
+service services::min(std::string type)
 {
-	const auto first_element = 0;
-	return sales[first_element];
+	service lowest;
+	const std::string default_name = "none";
+	for(auto sale : sales)
+	{
+		if(sale.getType()==type)
+		{
+			if(lowest.getName() == default_name)
+				{
+					lowest = sale;
+			}
+			else if(sale.getPrice() < lowest.getPrice())
+			{
+				
+				lowest = sale;
+			}
+		}//no else needed do_nothing()
+	}
+	return lowest;
 }
 
-service services::max()
+service services::max(std::string type)
 {
-	return sales[sales.size() - 1];
+	service highest;
+	for (auto sale : sales)
+	{
+		if (sale.getType() == type)
+		{
+			if (sale.getPrice() > highest.getPrice())
+			{
+				highest = sale;
+			}
+		}//no else needed do_nothing()
+	}
+	return highest;
 }
 
-double services::range()
+double services::range(std::string type)
 {
-	const auto first_element = 0;
-	return (sales[sales.size() - 1].getPrice() - sales[first_element].getPrice());
+	auto smallest_sale = min(type);
+	auto largest_sale = max(type);
+	return (largest_sale.getPrice() - smallest_sale.getPrice());
 }
 
-double services::average()
+double services::average(std::string type)
 {
-	double total = 0.0;
+	auto total = 0.0;
 	for(auto &sale : sales)
 	{
-		total += sale.getPrice();
+		if (sale.getType() == type) {
+			total += sale.getPrice();
+		}// no need for else do_nothing()
 	}
-	return (total/sales.size());
+	return (total/total_count(type));
 }
 
 int services::total_count(std::string type)

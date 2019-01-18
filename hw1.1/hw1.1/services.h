@@ -14,10 +14,10 @@ public:
 	services();
 
 	void read_file(std::string file_name = "data.csv");
-	service min();
-	service max() ;
-	double range();
-	double average();
+	service min(std::string type);
+	service max(std::string type) ;
+	double range(std::string type);
+	double average(std::string type);
 
 	int total_count(std::string type);
 

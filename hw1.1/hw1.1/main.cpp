@@ -14,15 +14,18 @@ int main()
 	sales.make_list_of_types();
 	std::set<std::string> types = sales.get_type_list();
 
-	for(auto total : types)
+	for(auto type : types)
 	{
-		std::cout << total << ": " << sales.total_count(total) << std::endl;
+		std::cout << type << ": " << sales.total_count(type) << std::endl;
+
+		std::cout << "Average: " << sales.average(type) << std::endl;
+		std::cout << "Minimum: " << sales.min(type) << std::endl;
+		std::cout << "Maximum: " << sales.max(type) << std::endl;
+		std::cout << "Range: " << sales.range(type) << std::endl;
+		std::cout << std::endl;
 	}
 
-	std::cout << "Average: " << sales.average() << std::endl;
-	std::cout << "Minimum: " << sales.min() << std::endl;
-	std::cout << "Maximum: " << sales.max() << std::endl;
-	std::cout << "Range: " << sales.range() << std::endl;
+	
 
 	system("pause");
 }
