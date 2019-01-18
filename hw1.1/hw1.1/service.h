@@ -34,7 +34,7 @@ public:
 
 
 	//output operator overload
-	friend std::ostream& operator<< (std::ostream& out, service &service);
+	friend std::ostream& operator<< (std::ostream& out, const service &s);
 
 };
 

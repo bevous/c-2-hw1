@@ -83,9 +83,9 @@ bool service::operator!=(const service &rh)
 	return this->compare_to(rh) != 0;
 }
 
-std::ostream& operator<<(std::ostream& out, service &service)
+std::ostream& operator<<(std::ostream& out, const service &s)
 {
-	out << service.getName() << " " << service.getType() << " " << service.getPrice()
-		<< " " << service.getDate();
+	out << s.getName() << " " << s.getType() << " " << s.getPrice()
+		<< " " << s.getDate();
 	return out;
 }

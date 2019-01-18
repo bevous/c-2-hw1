@@ -12,12 +12,12 @@ services::services()
 
 /**
 * Summary
-* Opens and reads the specicfied file. Then saves the data to memory.
+* Opens and reads the specified file. Then saves the data to memory.
 *
-* @param file_name The file to read
+* @param file_name The name of file to read.
 */
 
-void services::readFile(std::string file_name = "Data.csv")
+void services::read_file(std::string file_name)
 {
 	std::string buffer;
 	std::string buffer2;
@@ -67,25 +67,61 @@ void services::readFile(std::string file_name = "Data.csv")
 	std::sort(sales.begin(), sales.end());
 }
 
-double services::min()
+service services::min()
 {
-	return 0.0;
+	const auto first_element = 0;
+	return sales[first_element];
 }
 
-double services::max()
+service services::max()
 {
-	return 0.0;
+	return sales[sales.size() - 1];
 }
 
 double services::range()
 {
-	return 0.0;
+	const auto first_element = 0;
+	return (sales[sales.size() - 1].getPrice() - sales[first_element].getPrice());
 }
 
 double services::average()
 {
-	return 0.0;
+	double total = 0.0;
+	for(auto &sale : sales)
+	{
+		total += sale.getPrice();
+	}
+	return (total/sales.size());
 }
+
+int services::total_count(std::string type)
+{
+	auto type_total = 0;
+	for (auto sale : sales)
+	{
+		if(sale.getType()==type)
+		{
+			type_total++;
+		}
+		//no need for else do_nothing()
+	}
+	return type_total;
+}
+
+void services::make_list_of_types()
+{
+	for(auto sale : sales)
+	{
+		type_of_sales.insert(sale.getType());
+	}
+}
+
+std::set<std::string> services::get_type_list()
+{
+	return type_of_sales;
+}
+
+
 
 std::string services::makeFiles()
 {
