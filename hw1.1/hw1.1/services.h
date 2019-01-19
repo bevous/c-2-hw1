@@ -12,7 +12,8 @@ private:
 
 public:
 	services();
-
+	static bool validate_exists(const std::string& file_name = "data.csv");
+	static bool validate_format(const std::string& file_name = "data.csv");
 	void read_file(std::string file_name = "data.csv");
 	service min(std::string type);
 	service max(std::string type) ;

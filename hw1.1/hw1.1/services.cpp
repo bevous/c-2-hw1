@@ -7,7 +7,88 @@
 
 
 services::services()
+= default;
+
+/**
+* Summary
+* checks if the file exists
+*
+* @param file_name The name of file to read.
+* 
+* @returns bool true is file exists false if file does not exist
+*/
+bool services::validate_exists(const std::string& file_name)
 {
+	std::fstream file_check(file_name);
+	auto is_file_real = file_check.good();
+	file_check.close();
+	return is_file_real;
+}
+
+bool services::validate_format(const std::string& file_name)
+{
+	bool is_format_good = true;
+
+	std::string buffer;
+	std::string buffer2;
+	std::ifstream inFile;
+	inFile.open(file_name);
+	int collum = 0;
+	std::string name = "";
+	std::string type = "";
+	double price = 0.0;
+	std::string date;
+	const char delim = ',';
+
+	while (std::getline(inFile, buffer) && is_format_good) {
+		std::istringstream s(buffer);
+		while (std::getline(s, buffer2, delim) && is_format_good) {
+			switch (collum) {
+			case 0: {
+				name = buffer2;
+				is_format_good = true;
+				break;
+			}
+			case 1: {
+				type = buffer2;
+				is_format_good = true;
+				break;
+			}
+			case 2: {
+				try {
+					price = std::stod(buffer2);
+					is_format_good = true;
+				}catch (std::invalid_argument ex)
+				{
+					std::cout << ex.what() << std::endl;
+					is_format_good = false;
+				}
+				break;
+			}
+			case 3: {
+				date = buffer2;
+				is_format_good = true;
+				break;
+			}
+			default: {
+				//DONOTHING
+				is_format_good = false;
+				break;
+			}
+			}
+			if(!is_format_good)
+			{
+				std::cout << "not good bruh" << std::endl;
+			}
+			collum++;
+			//std::cout << "reading file " << buffer << std::endl;
+		}
+		collum = 0;// USE 0 TO RESET
+	}
+
+	inFile.close();
+
+	return is_format_good;
 }
 
 /**
@@ -55,7 +136,6 @@ void services::read_file(std::string file_name)
 			}
 			}
 			collum++;
-			//std::cout << "reading file " << buffer << std::endl;
 		}
 		collum = 0;// USE 0 TO RESET
 		sales.push_back(service(name, type, price, date));
