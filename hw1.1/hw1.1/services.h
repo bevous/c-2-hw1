@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-#include "service.h"
 #include <string>
 #include <set>
+#include "service.h"
 class services
 {
 
@@ -23,8 +23,8 @@ public:
 	int total_count(std::string type);
 
 	void make_list_of_types();
-	std::set<std::string> get_type_list();
-	std::string makeFiles();
+	std::set<std::string> get_type_list() const;
+	void make_files();
 
 
 

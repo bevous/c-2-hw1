@@ -3,9 +3,15 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <iomanip>
 #include "services.h"
 
 
+/**
+* Summary
+* this is the default constructor for the class.
+*
+*/
 services::services()
 = default;
 
@@ -25,6 +31,15 @@ bool services::validate_exists(const std::string& file_name)
 	return is_file_real;
 }
 
+
+/**
+* Summary
+* validates the format of the csv file
+*
+* @param file_name The name of file to read.
+*
+* @returns bool true if the file is formatted correctly. false if file is not formatted correctly
+*/
 bool services::validate_format(const std::string& file_name)
 {
 	bool is_format_good = true;
@@ -76,12 +91,7 @@ bool services::validate_format(const std::string& file_name)
 				break;
 			}
 			}
-			if(!is_format_good)
-			{
-				std::cout << "not good bruh" << std::endl;
-			}
 			collum++;
-			//std::cout << "reading file " << buffer << std::endl;
 		}
 		collum = 0;// USE 0 TO RESET
 	}
@@ -89,6 +99,22 @@ bool services::validate_format(const std::string& file_name)
 	inFile.close();
 
 	return is_format_good;
+}
+
+
+/**
+* Summary
+* Opens and reads the specified file. Then saves the data to memory.
+*
+* @param first service to compare.
+* 
+* @param other service to compare
+* 
+* @return bool
+*/
+bool compare_type(service& first, service& other)
+{
+	return first.getType() < other.getType();
 }
 
 /**
@@ -143,9 +169,18 @@ void services::read_file(std::string file_name)
 
 	inFile.close();
 
-	std::sort(sales.begin(), sales.end());
+	std::sort(sales.begin(), sales.end(), compare_type);
 }
 
+
+/**
+* Summary
+* finds the smallest sale in the largest category.
+*
+* @param type The sale category to check.
+*
+* @returns service 
+*/
 service services::min(std::string type)
 {
 	service lowest;
@@ -168,6 +203,16 @@ service services::min(std::string type)
 	return lowest;
 }
 
+
+
+/**
+* Summary
+* finds the largest sale in the given category.
+*
+* @param type The sale category to check.
+*
+* @returns service
+*/
 service services::max(std::string type)
 {
 	service highest;
@@ -184,6 +229,15 @@ service services::max(std::string type)
 	return highest;
 }
 
+
+/**
+* Summary
+* calculates the range between the largest sale and the smallest sale in the given category.
+*
+* @param type The sale category to check.
+*
+* @returns double
+*/
 double services::range(std::string type)
 {
 	auto smallest_sale = min(type);
@@ -191,6 +245,16 @@ double services::range(std::string type)
 	return (largest_sale.getPrice() - smallest_sale.getPrice());
 }
 
+
+
+/**
+* Summary
+* calculates the average sale price in the given category.
+*
+* @param type The sale category to check.
+*
+* @returns double
+*/
 double services::average(std::string type)
 {
 	auto total = 0.0;
@@ -203,6 +267,16 @@ double services::average(std::string type)
 	return (total/total_count(type));
 }
 
+
+
+/**
+* Summary
+* counts the number of sales in the given category.
+*
+* @param type The sale category to check.
+*
+* @returns int
+*/
 int services::total_count(std::string type)
 {
 	auto type_total = 0;
@@ -217,6 +291,13 @@ int services::total_count(std::string type)
 	return type_total;
 }
 
+
+
+/**
+* Summary
+* generates a list of sale types.
+*
+*/
 void services::make_list_of_types()
 {
 	for(auto sale : sales)
@@ -225,15 +306,50 @@ void services::make_list_of_types()
 	}
 }
 
-std::set<std::string> services::get_type_list()
+
+
+/**
+* Summary
+* passes the list of sale types out of the class.
+*
+* @returns set<string>
+*/
+std::set<std::string> services::get_type_list() const
 {
 	return type_of_sales;
 }
 
 
 
-std::string services::makeFiles()
+/**
+* Summary
+* generates output files for each category. each file is given the name of the category.
+*
+*/
+void services::make_files()
 {
-	return std::string();
+	for (auto type : type_of_sales) {
+		auto out_file_name = type + ".txt";
+
+		std::ofstream out_file(out_file_name);
+
+		for(auto sale : sales)
+		{
+			if(sale.getType()==type)
+			{
+				out_file << sale << std::endl;
+			}
+		}
+		out_file << std::endl;
+		out_file << std::fixed << std::setprecision(2) << std::endl;
+
+		out_file<< type << ": " << this->total_count(type) << std::endl;
+		out_file<< "Average: " << this->average(type) << std::endl;
+		out_file<< "Minimum: " << this->min(type) << std::endl;
+		out_file<< "Maximum: " << this->max(type) << std::endl;
+		out_file<< "Range: " << this->range(type) << std::endl;
+
+		out_file.close();
+	}
 }
 

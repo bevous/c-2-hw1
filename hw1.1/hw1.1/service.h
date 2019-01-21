@@ -11,11 +11,14 @@ private:
 	std::string type;
 	double price;
 	std::string date;
-
-	int compare_to(const service&);
-
-public:
 	
+	
+	int compare_to(const service&) const; //uses the price
+public:
+
+	
+
+
 	service(std::string nam = "none", std::string typ = "none", double pric = 1.0, std::string dat = "none");
 
 	//getters
